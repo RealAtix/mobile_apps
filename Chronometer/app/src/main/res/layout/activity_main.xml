@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:textSize="14sp"
-        android:text="Hello World!" />
+        android:text="0" />
 
     <Button
         android:id="@+id/startStopButton"
