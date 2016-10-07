@@ -1,6 +1,7 @@
 package io.raztech.chronometer;
 
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,11 +14,12 @@ public class MainActivity extends AppCompatActivity {
 
     private int count;
 
-    TextView timeView;
-    Button startStopButton;
-    Button resetButton;
+    private TextView timeView;
+    private Button startStopButton;
+    private Button resetButton;
 
-    SharedPreferences sharedPref;
+    private SharedPreferences sharedPref;
+    private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         resetButton = (Button) findViewById(R.id.resetButton);
 
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        handler = new Handler();
 
         Log.d("onCreate", "was called");
     }
@@ -53,9 +56,7 @@ public class MainActivity extends AppCompatActivity {
         count++;
     }
 
-    private void reset() {
-        count = 0;
-    }
+    private void reset() { count = 0; }
 
     @Override
     protected void onStart() {
@@ -69,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
 
         count = sharedPref.getInt("count", 0);
         updateCountView();
+
+        scheduleNextTick();
 
         Log.d("onResume", "was called");
     }
@@ -94,5 +97,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         Log.d("onDestroy", "was called");
+    }
+
+    private void scheduleNextTick() {
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                onTick();
+            }
+        }, 500);
+    }
+
+    private void onTick() {
+        count += 500;
+        updateCountView();
+        scheduleNextTick();
     }
 }
