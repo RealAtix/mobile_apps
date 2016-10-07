@@ -1,5 +1,7 @@
 package io.raztech.chronometer;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +17,8 @@ public class MainActivity extends AppCompatActivity {
     Button startStopButton;
     Button resetButton;
 
+    SharedPreferences sharedPref;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +29,10 @@ public class MainActivity extends AppCompatActivity {
         timeView = (TextView) findViewById(R.id.timeView);
         startStopButton = (Button) findViewById(R.id.startStopButton);
         resetButton = (Button) findViewById(R.id.resetButton);
+
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+
+        Log.d("onCreate", "was called");
     }
 
     public void onStartStopClicked(View v) {
@@ -39,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateCountView() {
         timeView.setText(String.valueOf(count));
-        Log.d("showCount", timeView.getText().toString());
     }
 
     private void increment() {
@@ -50,15 +57,42 @@ public class MainActivity extends AppCompatActivity {
         count = 0;
     }
 
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putInt("count", count);
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d("onStart", "was called");
     }
 
     @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        count = savedInstanceState.getInt("count");
+    protected void onResume() {
+        super.onResume();
+
+        count = sharedPref.getInt("count", 0);
         updateCountView();
+
+        Log.d("onResume", "was called");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        editor.putInt("count", count);
+        editor.commit();
+
+        Log.d("onPause", "was called");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d("onStop", "was called");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d("onDestroy", "was called");
     }
 }
