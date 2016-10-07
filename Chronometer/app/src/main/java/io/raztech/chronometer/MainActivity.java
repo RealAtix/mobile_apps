@@ -13,6 +13,7 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
 
     private int count;
+    private boolean counting;
 
     private TextView timeView;
     private Button startStopButton;
@@ -39,8 +40,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onStartStopClicked(View v) {
-        increment();
-        updateCountView();
+        if (counting) {
+            counting = false;
+            startStopButton.setText("Start");
+        } else {
+            counting = true;
+            startStopButton.setText("Stop");
+            scheduleNextTick();
+        }
     }
 
     public void onResetClicked(View v) {
@@ -53,10 +60,46 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void increment() {
-        count++;
+        count += 500;
     }
 
     private void reset() { count = 0; }
+
+    private void scheduleNextTick() {
+        if (counting) {
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    onTick();
+                }
+            }, 500);
+        }
+    }
+
+    private void onTick() {
+        increment();
+        updateCountView();
+
+        scheduleNextTick();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putBoolean("counting", counting);
+        outState.putString("startStopButton", startStopButton.getText().toString());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+
+        startStopButton.setText(savedInstanceState.getString("startStopButton"));
+
+        counting = savedInstanceState.getBoolean("counting");
+        scheduleNextTick();
+    }
 
     @Override
     protected void onStart() {
@@ -70,8 +113,6 @@ public class MainActivity extends AppCompatActivity {
 
         count = sharedPref.getInt("count", 0);
         updateCountView();
-
-        scheduleNextTick();
 
         Log.d("onResume", "was called");
     }
@@ -90,6 +131,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        counting = false;
+        startStopButton.setText("Start");
         Log.d("onStop", "was called");
     }
 
@@ -97,20 +140,5 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         Log.d("onDestroy", "was called");
-    }
-
-    private void scheduleNextTick() {
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                onTick();
-            }
-        }, 500);
-    }
-
-    private void onTick() {
-        count += 500;
-        updateCountView();
-        scheduleNextTick();
     }
 }
