@@ -49,4 +49,16 @@ public class MainActivity extends AppCompatActivity {
     private void reset() {
         count = 0;
     }
+
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("count", count);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        count = savedInstanceState.getInt("count");
+        updateCountView();
+    }
 }
