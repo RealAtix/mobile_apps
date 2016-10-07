@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private int count = 0;
+    private int count;
 
     TextView timeView;
     Button startStopButton;
@@ -20,27 +20,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        count = 0;
+
         timeView = (TextView) findViewById(R.id.timeView);
         startStopButton = (Button) findViewById(R.id.startStopButton);
         resetButton = (Button) findViewById(R.id.resetButton);
-
-        startStopButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                increment();
-                showCount();
-            }
-        });
-        resetButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                reset();
-                showCount();
-            }
-        });
     }
 
-    private void showCount() {
+    public void onStartStopClicked(View v) {
+        increment();
+        updateCountView();
+    }
+
+    public void onResetClicked(View v) {
+        reset();
+        updateCountView();
+    }
+
+    private void updateCountView() {
         timeView.setText(String.valueOf(count));
         Log.d("showCount", timeView.getText().toString());
     }
