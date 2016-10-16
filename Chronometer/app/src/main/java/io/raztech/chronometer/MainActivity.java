@@ -44,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
         if (counting) {
             counting = false;
             startStopButton.setText("Start");
+
+            // remove callback so time doesn't get lost when spamming start/stop
+            handler.removeCallbacksAndMessages(null);
         } else {
             counting = true;
             startStopButton.setText("Stop");
