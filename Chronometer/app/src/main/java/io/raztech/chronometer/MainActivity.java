@@ -43,13 +43,13 @@ public class MainActivity extends AppCompatActivity {
     public void onStartStopClicked(View v) {
         if (counting) {
             counting = false;
-            startStopButton.setText("Start");
+            startStopButton.setText(getResources().getString(R.string.app_start));
 
             // remove callback so time doesn't get lost when spamming start/stop
             handler.removeCallbacksAndMessages(null);
         } else {
             counting = true;
-            startStopButton.setText("Stop");
+            startStopButton.setText(getResources().getString(R.string.app_stop));
             scheduleNextTick();
         }
     }
@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         counting = false;
-        startStopButton.setText("Start");
+        startStopButton.setText(getResources().getString(R.string.app_start));
         Log.d("onStop", "was called");
     }
 
