@@ -10,6 +10,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
+
+
 public class MainActivity extends AppCompatActivity {
 
     private long accumulatedMilliseconds;
@@ -60,7 +65,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateCountView() {
-        timeView.setText(String.valueOf(accumulatedMilliseconds));
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSS");
+        sdf.setTimeZone(TimeZone.getTimeZone("UTC")); // make sure locale doesn't affect timer
+
+        String time = sdf.format(new Date(accumulatedMilliseconds));
+        timeView.setText(time);
     }
 
     private void increment() {
