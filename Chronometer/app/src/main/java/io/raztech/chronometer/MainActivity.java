@@ -12,7 +12,8 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private int count;
+    private long accumulatedMilliseconds;
+    private long startTimeMillis;
     private boolean counting;
 
     private TextView timeView;
@@ -27,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        count = 0;
+        accumulatedMilliseconds = 0;
 
         timeView = (TextView) findViewById(R.id.timeView);
         startStopButton = (Button) findViewById(R.id.startStopButton);
@@ -56,17 +57,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateCountView() {
-        timeView.setText(String.valueOf(count));
+        timeView.setText(String.valueOf(accumulatedMilliseconds));
     }
 
     private void increment() {
-        count += 500;
+        accumulatedMilliseconds += System.currentTimeMillis() - startTimeMillis;
     }
 
-    private void reset() { count = 0; }
+    private void reset() { accumulatedMilliseconds = 0; }
 
     private void scheduleNextTick() {
         if (counting) {
+            startTimeMillis = System.currentTimeMillis();
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -111,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        count = sharedPref.getInt("count", 0);
+        accumulatedMilliseconds = sharedPref.getLong("accumulatedMilliseconds", 0);
         updateCountView();
 
         Log.d("onResume", "was called");
@@ -122,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
         SharedPreferences.Editor editor = sharedPref.edit();
 
-        editor.putInt("count", count);
+        editor.putLong("accumulatedMilliseconds", accumulatedMilliseconds);
         editor.commit();
 
         Log.d("onPause", "was called");
