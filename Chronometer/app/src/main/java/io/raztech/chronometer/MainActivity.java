@@ -1,6 +1,7 @@
 package io.raztech.chronometer;
 
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -129,10 +130,10 @@ public class MainActivity extends AppCompatActivity {
         closeTimeMillis = sharedPref.getLong("closeTimeMillis", 0);
         accumulatedMilliseconds = sharedPref.getLong("accumulatedMilliseconds", 0);
 
-        startStopButton.setText(sharedPref.getString("startStopButton", "Start"));
+        startStopButton.setText(sharedPref.getString("startStopButton", getResources().getString(R.string.app_start)));
         counting = sharedPref.getBoolean("counting", false);
         if (counting) {
-            startStopButton.setText("Stop");
+            startStopButton.setText(getResources().getString(R.string.app_stop));
             accumulatedMilliseconds += (System.currentTimeMillis() - closeTimeMillis);
             handler.removeCallbacksAndMessages(null);
             scheduleNextTick();
@@ -153,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
         editor.putBoolean("counting", counting);
         if (counting) {
             editor.putLong("closeTimeMillis", System.currentTimeMillis());
-            editor.putString("startStopButton", "Start");
+            editor.putString("startStopButton", getResources().getString(R.string.app_start));
         }
 
         editor.commit();
