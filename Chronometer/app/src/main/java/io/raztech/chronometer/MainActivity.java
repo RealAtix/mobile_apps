@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     private long accumulatedMilliseconds;
     private long startTimeMillis;
+    private long closeTimeMillis;
     private boolean counting;
 
     private TextView timeView;
@@ -125,7 +126,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        closeTimeMillis = sharedPref.getLong("closeTimeMillis", 0);
         accumulatedMilliseconds = sharedPref.getLong("accumulatedMilliseconds", 0);
+
+        startStopButton.setText(sharedPref.getString("startStopButton", "Start"));
+        counting = sharedPref.getBoolean("counting", false);
+        if (counting) {
+            startStopButton.setText("Stop");
+            accumulatedMilliseconds += (System.currentTimeMillis() - closeTimeMillis);
+            handler.removeCallbacksAndMessages(null);
+            scheduleNextTick();
+        }
+
         updateCountView();
 
         Log.d("onResume", "was called");
@@ -137,6 +149,13 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPref.edit();
 
         editor.putLong("accumulatedMilliseconds", accumulatedMilliseconds);
+
+        editor.putBoolean("counting", counting);
+        if (counting) {
+            editor.putLong("closeTimeMillis", System.currentTimeMillis());
+            editor.putString("startStopButton", "Start");
+        }
+
         editor.commit();
 
         Log.d("onPause", "was called");
@@ -145,8 +164,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        counting = false;
-        startStopButton.setText(getResources().getString(R.string.app_start));
+
         Log.d("onStop", "was called");
     }
 
