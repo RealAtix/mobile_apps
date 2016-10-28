@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:dictionary="http://schemas.android.com/apk/res-auto">
+    <!-- TODO: add icons to menu -->
+    <item
+        android:id="@+id/menu_dictionary"
+        android:title="Select dictonaries"
+        dictionary:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menu_share_email"
+        android:title="Share by e-mail" />
+</menu>
