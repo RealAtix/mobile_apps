@@ -20,13 +20,14 @@
         android:hint="Enter definition"
         android:ems="10"
         android:gravity="center"
-        android:id="@+id/editText" />
+        android:id="@+id/editView" />
 
     <Button
         android:text="Look up"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/lookUpButton" />
+        android:id="@+id/lookUpButton"
+        android:onClick="onLookupClicked"/>
 
     <ListView
         android:layout_width="match_parent"

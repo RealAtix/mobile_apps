@@ -6,15 +6,30 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+
+import io.raztech.dictionary.services.DictionaryService;
 
 public class MainActivity extends AppCompatActivity {
+
+    private EditText editView;
+    private Button lookupButton;
+    private ListView definitionView;
+
+    private DictionaryService dictionaryService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lookup);
-    }
 
+        editView = (EditText) findViewById(R.id.editView);
+        lookupButton = (Button) findViewById(R.id.lookUpButton);
+        definitionView = (ListView) findViewById(R.id.definitionView);
+    }
 
     // Initiating Menu XML file (menu.xml)
     @Override
@@ -33,6 +48,11 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void onLookupClicked(View v) {
+        dictionaryService = new DictionaryService();
+        dictionaryService.execute();
     }
 
 }
