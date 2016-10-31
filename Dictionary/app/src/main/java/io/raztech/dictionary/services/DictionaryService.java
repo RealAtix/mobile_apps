@@ -26,11 +26,11 @@ public class DictionaryService extends AsyncTask<Void, Void, Void> {
 
     private List<Dictionary> dictionaries;
 
-    private static String METHOD_NAME = "DictionaryList";
-    private static String SOAP_ACTION = "http://services.aonaware.com/webservices/DictionaryList";
+    private final static String METHOD_NAME = "DictionaryList";
+    private final static String SOAP_ACTION = "http://services.aonaware.com/webservices/DictionaryList";
 
-    private static String NAMESPACE = "http://services.aonaware.com/webservices/";
-    private static String SOAP_URL = "http://services.aonaware.com/DictService/DictService.asmx";
+    private final static String NAMESPACE = "http://services.aonaware.com/webservices/";
+    private final static String SOAP_URL = "http://services.aonaware.com/DictService/DictService.asmx";
 
     @Override
     protected Void doInBackground(Void... params) {
@@ -76,19 +76,5 @@ public class DictionaryService extends AsyncTask<Void, Void, Void> {
 
         return null;
     }
-
-//    @Override
-//    protected void onPostExecute(Void aVoid) {
-//        super.onPostExecute(aVoid);
-//        pdialog.dismiss();
-//        Toast.makeText(getApplicationContext(), celtofah.toString() + " Celsius", Toast.LENGTH_SHORT).show();    }
-//
-//    @Override
-//    protected void onPreExecute() {
-//        super.onPreExecute();
-//        pdialog = new ProgressDialog(MainActivity.this);
-//        pdialog.setMessage("Converting...");
-//        pdialog.show();
-//    }
 
 }

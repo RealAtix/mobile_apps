@@ -58,11 +58,6 @@ public class DictionaryActivity extends AppCompatActivity {
             dictValues.add(d.getName());
         }
 
-        List<String> selectedDictValues = new ArrayList<>();
-        for (Dictionary d : dictionaries) {
-            selectedDictValues.add(d.getName());
-        }
-
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_multiple_choice, dictValues);
         definitionList.setAdapter(adapter);
@@ -76,8 +71,6 @@ public class DictionaryActivity extends AppCompatActivity {
             }
         }
     }
-
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -109,10 +102,6 @@ public class DictionaryActivity extends AppCompatActivity {
         }
 
         String selectedDictionaryList = new Gson().toJson(selectedDictionaries);
-
-//        SharedPreferences.Editor editor = sharedPref.edit();
-//        editor.putString("selectedDictionaryList", selectedDictionaryList);
-//        editor.apply();
 
         Intent intent = new Intent();
         intent.putExtra("selectedDictList", selectedDictionaryList);

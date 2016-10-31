@@ -19,12 +19,16 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import io.raztech.dictionary.model.Definition;
 import io.raztech.dictionary.model.Dictionary;
+import io.raztech.dictionary.services.AsyncResponse;
+import io.raztech.dictionary.services.DefinitionService;
 import io.raztech.dictionary.services.DictionaryService;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
     private EditText editView;
     private Button lookupButton;
@@ -103,12 +107,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void onLookupClicked(View v) {
+    protected void onLookupClicked(View v) {
         Log.d("selectedDictionaries", selectedDictionaries.toString());
+        String definition = editView.getText().toString();
+
+        List<String> dictIDs = new ArrayList<>();
+        for (Dictionary d : selectedDictionaries) {
+            dictIDs.add(d.getId());
+        }
+        String dicts = new Gson().toJson(dictIDs);
+
+        new DefinitionService(this).execute(definition, dicts);
     }
 
     @Override
-    public void onPause() {
+    protected void onPause() {
         super.onPause();
 
         String dictionaryList = new Gson().toJson(dictionaries);
@@ -122,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onResume() {
+    protected void onResume() {
         super.onResume();
         Log.d("onresume", "true");
 
@@ -138,6 +151,11 @@ public class MainActivity extends AppCompatActivity {
     // Share application context with other classes
     public static Context getContextOfApplication(){
         return contextOfApplication;
+    }
+
+    @Override
+    public void processFinish(List<Definition> output){
+        Log.d("finish", "ayyy");
     }
 
 }
