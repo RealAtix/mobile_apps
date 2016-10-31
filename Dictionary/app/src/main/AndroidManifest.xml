@@ -3,6 +3,7 @@
     package="io.raztech.dictionary">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-sdk android:minSdkVersion="11" />
 
     <application
         android:allowBackup="true"
@@ -16,6 +17,15 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".DictionaryActivity"
+            android:label="Dictionary Activity"
+            android:parentActivityName="io.raztech.dictionary.MainActivity" >
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="io.raztech.dictionary.MainActivity" />
         </activity>
     </application>
 
