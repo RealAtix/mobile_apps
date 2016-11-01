@@ -4,11 +4,11 @@
     <!-- TODO: add icons to menu -->
     <item
         android:id="@+id/menu_dictionary"
-        android:title="Select dictonaries"
+        android:title="@string/menu_option_title"
         dictionary:showAsAction="ifRoom"
         android:icon="@drawable/ic_settings_light" />
 
     <item
         android:id="@+id/menu_share_email"
-        android:title="Share by e-mail" />
+        android:title="@string/menu_share_title" />
 </menu>

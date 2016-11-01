@@ -94,12 +94,12 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
                     }
 
                     Intent emailIntent = EmailIntentBuilder.from(this)
-                            .subject("Definition for \"" + definitions.get(0).getWord() + "\"")
+                            .subject(getResources().getString(R.string.output_definition_for) + " \"" + definitions.get(0).getWord() + "\"")
                             .body(defBody)
                             .build();
                     startActivity(emailIntent);
                 } else {
-                    Toast.makeText(this, "No definitions", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getResources().getString(R.string.output_no_definitions), Toast.LENGTH_SHORT).show();
                 }
             default:
                 return super.onOptionsItemSelected(item);
@@ -112,14 +112,13 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
             if (data.hasExtra("selectedDictList")) {
                 String result = data.getExtras().getString("selectedDictList");
                 if (result.contains("[]")) {
-                    Toast.makeText(this, "Can't have 0 dictionaries selected", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, getResources().getString(R.string.output_no_dictionaries), Toast.LENGTH_LONG).show();
                     return;
                 }
                 if (result != null && result.length() > 0) {
-                    Log.d("te",result);
                     selectedDictionaries =
                             new Gson().fromJson(result, new TypeToken<List<Dictionary>>() {}.getType());
-                    Log.d("te",selectedDictionaries.toString());
+
                     onPause(); //save data for next dictionary selection
                 }
             }
@@ -128,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
     protected void onLookupClicked(View v) {
         if (editView.getText().length() == 0) {
-            Toast.makeText(this, "Need input", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.output_need_input), Toast.LENGTH_SHORT).show();
             return;
         }
 //        Log.d("selectedDictionaries", selectedDictionaries.toString());
@@ -178,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     @Override
     public void processFinish(List<Definition> output){
         if (output.size() == 0 || output == null) {
-            Toast.makeText(this, "Word not found in selected dictionaries", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.output_word_not_found), Toast.LENGTH_SHORT).show();
             return;
         }
 

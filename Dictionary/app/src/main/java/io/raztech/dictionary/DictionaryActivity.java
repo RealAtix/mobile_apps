@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
@@ -88,7 +87,6 @@ public class DictionaryActivity extends AppCompatActivity {
                 for (int j = 0; j < dictionaries.size(); j++) {
                     if (dictionaries.get(j).getName().equals(definitionList.getItemAtPosition(i).toString())) {
                         selectedDictionaries.add(dictionaries.get(j));
-                        Log.d("dd", dictionaries.get(j).toString());
                     }
                 }
             }

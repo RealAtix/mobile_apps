@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Dictionary</string>
+    <string name="edit_text_hint">Enter definition</string>
+    <string name="btn_text">Look up</string>
+    <string name="menu_option_title">Select dictonaries</string>
+    <string name="menu_share_title">Share by e-mail</string>
+
+    <string name="output_no_definitions">No definitions</string>
+    <string name="output_no_dictionaries">Can\'t have 0 dictionaries selected</string>
+    <string name="output_need_input">Need input</string>
+    <string name="output_word_not_found">Word not found in selected dictionaries</string>
+    <string name="output_fetching_definitions">Fetching definitions...</string>
+    <string name="output_definition_for">Definition for</string>
 </resources>

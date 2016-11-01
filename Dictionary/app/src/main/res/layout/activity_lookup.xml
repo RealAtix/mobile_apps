@@ -11,24 +11,24 @@
     android:orientation="vertical"
     tools:context="io.raztech.dictionary.MainActivity"
     android:descendantFocusability="beforeDescendants"
-    android:focusableInTouchMode="true">
+    android:focusableInTouchMode="true" >
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:hint="Enter definition"
+        android:hint="@string/edit_text_hint"
         android:ems="10"
         android:gravity="center"
         android:id="@+id/editView"
-        android:onClick="onTextViewClicked"/>
+        android:onClick="onTextViewClicked" />
 
     <Button
-        android:text="Look up"
+        android:text="@string/btn_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/lookUpButton"
-        android:onClick="onLookupClicked"/>
+        android:onClick="onLookupClicked" />
 
     <ListView
         android:layout_width="match_parent"

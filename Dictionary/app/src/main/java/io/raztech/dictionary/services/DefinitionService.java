@@ -2,9 +2,7 @@ package io.raztech.dictionary.services;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -12,16 +10,14 @@ import com.google.gson.reflect.TypeToken;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
-import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import io.raztech.dictionary.MainActivity;
+import io.raztech.dictionary.R;
 import io.raztech.dictionary.model.Definition;
-import io.raztech.dictionary.model.Dictionary;
 
 public class DefinitionService extends AsyncTask<String, Void, List<Definition>> {
 
@@ -102,7 +98,7 @@ public class DefinitionService extends AsyncTask<String, Void, List<Definition>>
         super.onPreExecute();
 
         progDialog = new ProgressDialog(context);
-        progDialog.setMessage("Fetching definitions...");
+        progDialog.setMessage(context.getResources().getString(R.string.output_fetching_definitions));
         progDialog.setIndeterminate(false);
         progDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progDialog.setCancelable(true);
