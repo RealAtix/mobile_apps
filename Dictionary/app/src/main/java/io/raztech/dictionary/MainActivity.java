@@ -11,6 +11,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -108,7 +110,11 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     }
 
     protected void onLookupClicked(View v) {
-        Log.d("selectedDictionaries", selectedDictionaries.toString());
+        if (editView.getText().length() == 0) {
+            Toast.makeText(this, "Need input", Toast.LENGTH_SHORT).show();
+            return;
+        }
+//        Log.d("selectedDictionaries", selectedDictionaries.toString());
         String definition = editView.getText().toString();
 
         List<String> dictIDs = new ArrayList<>();
@@ -155,7 +161,24 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
     @Override
     public void processFinish(List<Definition> output){
-        Log.d("finish", "ayyy");
+        Log.d("finish", output.toString());
+        if (output.size() == 0 || output == null) {
+            Toast.makeText(this, "Word not found in selected dictionaries", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        hideKeyboard();
+
+        DefinitionAdapter adapter = new DefinitionAdapter(this, output);
+        definitionView.setAdapter(adapter);
+    }
+
+    private void hideKeyboard() {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 
 }

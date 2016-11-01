@@ -1,19 +1,15 @@
 package io.raztech.dictionary.model;
 
-/**
- * Created by Raz on 28/10/16.
- */
-
 public class Definition {
 
     private String word;
-    private String dictionaryId;
+    private String dictionaryName;
     private String definition;
 
-    public Definition(String word, String definition, String dictionaryId) {
+    public Definition(String word, String definition, String dictionaryName) {
         this.word = word;
         this.definition = definition;
-        this.dictionaryId = dictionaryId;
+        this.dictionaryName = dictionaryName;
     }
 
     public String getWord() {
@@ -24,8 +20,8 @@ public class Definition {
         return definition;
     }
 
-    public String getDictionaryId() {
-        return dictionaryId;
+    public String getDictionaryName() {
+        return dictionaryName;
     }
 
 }
