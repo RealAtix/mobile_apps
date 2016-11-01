@@ -5,7 +5,8 @@
     <item
         android:id="@+id/menu_dictionary"
         android:title="Select dictonaries"
-        dictionary:showAsAction="ifRoom" />
+        dictionary:showAsAction="ifRoom"
+        android:icon="@drawable/ic_settings_light" />
 
     <item
         android:id="@+id/menu_share_email"

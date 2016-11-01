@@ -12,7 +12,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -143,7 +142,6 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("onresume", "true");
 
         String dictionaryJSONList = sharedPref.getString("dictionaryList", "");
         dictionaries =

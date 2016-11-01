@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.raztech.dictionary.model.Definition;
@@ -27,6 +26,7 @@ public class DefinitionAdapter extends ArrayAdapter<Definition> {
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_layout, parent, false);
         }
+
         // Lookup view for data population
         TextView dictName = (TextView) convertView.findViewById(R.id.dictName);
         TextView wordDef = (TextView) convertView.findViewById(R.id.wordDef);

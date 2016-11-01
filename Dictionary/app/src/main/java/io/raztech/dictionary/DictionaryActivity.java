@@ -1,28 +1,21 @@
 package io.raztech.dictionary;
 
-import android.app.Activity;
-import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.SparseBooleanArray;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import io.raztech.dictionary.model.Dictionary;
@@ -58,7 +51,7 @@ public class DictionaryActivity extends AppCompatActivity {
             dictValues.add(d.getName());
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_multiple_choice, dictValues);
         definitionList.setAdapter(adapter);
         definitionList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
