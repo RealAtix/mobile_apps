@@ -24,4 +24,11 @@ public class Definition {
         return dictionaryName;
     }
 
+    @Override
+    public String toString() {
+        return dictionaryName + "\n\n" + definition + "\n\n===================\n";
+    }
+
 }
+
+

@@ -23,6 +23,7 @@ import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.cketti.mailto.EmailIntentBuilder;
 import io.raztech.dictionary.model.Definition;
 import io.raztech.dictionary.model.Dictionary;
 import io.raztech.dictionary.services.AsyncResponse;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     private DictionaryService dictionaryService;
     private List<Dictionary> dictionaries;
     private List<Dictionary> selectedDictionaries;
+    private List<Definition> definitions;
     private long dictionaryFetchTime;
 
     private SharedPreferences sharedPref;
@@ -53,6 +55,8 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         editView = (EditText) findViewById(R.id.editView);
         lookupButton = (Button) findViewById(R.id.lookUpButton);
         definitionView = (ListView) findViewById(R.id.definitionView);
+
+        definitions = new ArrayList<>();
 
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         contextOfApplication = getApplicationContext();
@@ -79,10 +83,24 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.menu_dictionary:
-                Log.d("menu item", "select dictionary");
                 Intent i = new Intent(this, DictionaryActivity.class);
                 startActivityForResult(i, REQUEST_CODE);
                 return true;
+            case R.id.menu_share_email:
+                if (!definitions.isEmpty()) {
+                    String defBody = "";
+                    for (Definition def : definitions) {
+                        defBody += def.toString();
+                    }
+
+                    Intent emailIntent = EmailIntentBuilder.from(this)
+                            .subject("Definition for \"" + definitions.get(0).getWord() + "\"")
+                            .body(defBody)
+                            .build();
+                    startActivity(emailIntent);
+                } else {
+                    Toast.makeText(this, "No definitions", Toast.LENGTH_SHORT).show();
+                }
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -159,11 +177,12 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
     @Override
     public void processFinish(List<Definition> output){
-        Log.d("finish", output.toString());
         if (output.size() == 0 || output == null) {
             Toast.makeText(this, "Word not found in selected dictionaries", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        definitions = new ArrayList<>(output);
 
         hideKeyboard();
 
