@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         }
         String dicts = new Gson().toJson(dictIDs);
 
-        new DefinitionService(this).execute(definition, dicts);
+        new DefinitionService(this, this).execute(definition, dicts);
     }
 
     @Override

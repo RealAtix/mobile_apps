@@ -1,5 +1,6 @@
 package io.raztech.dictionary.services;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -31,14 +32,18 @@ public class DefinitionService extends AsyncTask<String, Void, List<Definition>>
 
     private List<Definition> definitions;
 
+    ProgressDialog progDialog;
+    Context context;
+
     private final static String METHOD_NAME = "DefineInDict";
     private final static String SOAP_ACTION = "http://services.aonaware.com/webservices/DefineInDict";
 
     private final static String NAMESPACE = "http://services.aonaware.com/webservices/";
     private final static String SOAP_URL = "http://services.aonaware.com/DictService/DictService.asmx";
 
-    public DefinitionService(AsyncResponse delegate){
+    public DefinitionService(AsyncResponse delegate, Context context){
         this.delegate = delegate;
+        this.context = context;
     }
 
     @Override
@@ -93,8 +98,23 @@ public class DefinitionService extends AsyncTask<String, Void, List<Definition>>
     }
 
     @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+
+        progDialog = new ProgressDialog(context);
+        progDialog.setMessage("Fetching definitions...");
+        progDialog.setIndeterminate(false);
+        progDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progDialog.setCancelable(true);
+        progDialog.show();
+    }
+
+    @Override
     protected void onPostExecute(List<Definition> result) {
+        super.onPostExecute(result);
+
         delegate.processFinish(result);
+        progDialog.dismiss();
     }
 
 }
