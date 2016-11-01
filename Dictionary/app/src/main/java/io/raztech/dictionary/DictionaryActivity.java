@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
@@ -38,12 +39,17 @@ public class DictionaryActivity extends AppCompatActivity {
         sharedPref = PreferenceManager.getDefaultSharedPreferences(applicationContext);
 
         String dictionaryJSONList = sharedPref.getString("dictionaryList", "");
-        String selectedDictionaryJSONList = sharedPref.getString("selectedDictionaryList", new Gson().toJson(dictionaries));
-
         dictionaries =
                 new Gson().fromJson(dictionaryJSONList, new TypeToken<List<Dictionary>>() {}.getType());
+
+        String selectedDictionaryJSONList = sharedPref.getString("selectedDictionaryList", new Gson().toJson(dictionaries));
         selectedDictionaries =
                 new Gson().fromJson(selectedDictionaryJSONList, new TypeToken<List<Dictionary>>() {}.getType());
+
+        //fix bug when using app for the first time
+        if (selectedDictionaries == null) {
+            selectedDictionaries = dictionaries;
+        }
 
         List<String> dictValues = new ArrayList<>();
         for (Dictionary d : dictionaries) {

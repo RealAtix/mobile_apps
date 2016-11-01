@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         definitionView = (ListView) findViewById(R.id.definitionView);
 
         definitions = new ArrayList<>();
+        selectedDictionaries = new ArrayList<>();
 
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         contextOfApplication = getApplicationContext();
@@ -178,6 +179,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     public void processFinish(List<Definition> output){
         if (output.size() == 0 || output == null) {
             Toast.makeText(this, getResources().getString(R.string.output_word_not_found), Toast.LENGTH_SHORT).show();
+            definitionView.setAdapter(new DefinitionAdapter(this, new ArrayList<Definition>()));
             return;
         }
 
