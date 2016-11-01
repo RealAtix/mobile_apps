@@ -173,12 +173,17 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         definitionView.setAdapter(adapter);
     }
 
+    protected void onTextViewClicked(View v) {
+        editView.setText("");
+    }
+
     private void hideKeyboard() {
         View view = this.getCurrentFocus();
         if (view != null) {
             InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
+        editView.clearFocus();
     }
 
 }

@@ -20,7 +20,8 @@
         android:hint="Enter definition"
         android:ems="10"
         android:gravity="center"
-        android:id="@+id/editView" />
+        android:id="@+id/editView"
+        android:onClick="onTextViewClicked"/>
 
     <Button
         android:text="Look up"
@@ -32,6 +33,8 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/definitionView"/>
+        android:id="@+id/definitionView"
+        android:dividerHeight="2dp"
+        android:divider="@drawable/list_divider" />
 
 </LinearLayout>
