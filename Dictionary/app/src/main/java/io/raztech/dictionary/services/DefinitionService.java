@@ -61,7 +61,7 @@ public class DefinitionService extends AsyncTask<String, Void, List<Definition>>
             envelope.dotNet = true;
             envelope.setOutputSoapObject(request);
             HttpTransportSE httpTransport = new HttpTransportSE(SOAP_URL);
-            httpTransport.debug = true;
+            httpTransport.debug = false;
 
             try {
                 httpTransport.call(SOAP_ACTION, envelope);

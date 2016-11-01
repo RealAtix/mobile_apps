@@ -11,5 +11,5 @@
     <item
         android:id="@+id/menu_share_email"
         android:title="@string/menu_share_title" />
-    
+
 </menu>
