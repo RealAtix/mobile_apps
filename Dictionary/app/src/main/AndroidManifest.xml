@@ -20,7 +20,7 @@
         </activity>
         <activity
             android:name=".DictionaryActivity"
-            android:label="Dictionary Activity"
+            android:label="@string/app_select_dictionaries"
             android:parentActivityName="io.raztech.dictionary.MainActivity" >
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
