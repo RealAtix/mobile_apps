@@ -46,11 +46,6 @@ public class DictionaryActivity extends AppCompatActivity {
         selectedDictionaries =
                 new Gson().fromJson(selectedDictionaryJSONList, new TypeToken<List<Dictionary>>() {}.getType());
 
-        //fix bug when using app for the first time
-        if (selectedDictionaries == null) {
-            selectedDictionaries = dictionaries;
-        }
-
         List<String> dictValues = new ArrayList<>();
         for (Dictionary d : dictionaries) {
             dictValues.add(d.getName());
