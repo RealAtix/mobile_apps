@@ -57,17 +57,19 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         definitionView = (ListView) findViewById(R.id.definitionView);
 
         definitions = new ArrayList<>();
+        dictionaries = new ArrayList<>();
         selectedDictionaries = new ArrayList<>();
 
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         contextOfApplication = getApplicationContext();
 
-        dictionaryService = new DictionaryService();
+        dictionaryService = new DictionaryService(this);
 
         // Get new dictionary list every 48h in case of new addition
         dictionaryFetchTime = sharedPref.getLong("dictionaryFetchTime", 0);
         long maxDuration = 2 * 24 * 60 * 60 * 1000;
         if (System.currentTimeMillis() - dictionaryFetchTime >= maxDuration) {
+            dictionaryFetchTime = System.currentTimeMillis();
             dictionaryService.execute();
         }
     }
@@ -153,6 +155,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("dictionaryList", dictionaryList);
         editor.putString("selectedDictionaryList", selectedDictionaryList);
+        editor.putLong("dictionaryFetchTime", dictionaryFetchTime);
 
         editor.apply();
     }
@@ -176,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     }
 
     @Override
-    public void processFinish(List<Definition> output){
+    public void processFinishDef(List<Definition> output){
         if (output.size() == 0 || output == null) {
             Toast.makeText(this, getResources().getString(R.string.output_word_not_found), Toast.LENGTH_SHORT).show();
             definitionView.setAdapter(new DefinitionAdapter(this, new ArrayList<Definition>()));
@@ -202,6 +205,21 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
         editView.clearFocus();
+    }
+
+    @Override
+    public void processFinishDict(List<Dictionary> output){
+        // Reset selected dictionaries after update in case one is removed (lazy error handling)
+        dictionaries = output;
+        selectedDictionaries = output;
+
+        String dictionaryList = new Gson().toJson(dictionaries);
+        String selectedDictionaryList = new Gson().toJson(dictionaries);
+
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("dictionaryList", dictionaryList);
+        editor.putString("selectedDictionaryList", selectedDictionaryList);
+        editor.apply();
     }
 
 }

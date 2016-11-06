@@ -45,7 +45,7 @@ public class DefinitionService extends AsyncTask<String, Void, List<Definition>>
     @Override
     protected List<Definition> doInBackground(String[] params) {
 
-        definitions = new ArrayList<Definition>();
+        definitions = new ArrayList<>();
 
         String word = params[0].toString();
         String dicts = params[1];
@@ -109,7 +109,7 @@ public class DefinitionService extends AsyncTask<String, Void, List<Definition>>
     protected void onPostExecute(List<Definition> result) {
         super.onPostExecute(result);
 
-        delegate.processFinish(result);
+        delegate.processFinishDef(result);
         progDialog.dismiss();
     }
 

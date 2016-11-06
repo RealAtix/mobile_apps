@@ -1,11 +1,8 @@
 package io.raztech.dictionary.services;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.preference.PreferenceManager;
+import android.util.Log;
 
-import com.google.gson.Gson;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
@@ -15,13 +12,14 @@ import org.ksoap2.transport.HttpTransportSE;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.raztech.dictionary.MainActivity;
 import io.raztech.dictionary.model.Dictionary;
 
-public class DictionaryService extends AsyncTask<Void, Void, Void> {
+public class DictionaryService extends AsyncTask<Void, Void, List<Dictionary>> {
 
     private SoapObject request;
     private SoapObject answer;
+
+    public AsyncResponse delegate = null;
 
     private List<Dictionary> dictionaries;
 
@@ -31,12 +29,15 @@ public class DictionaryService extends AsyncTask<Void, Void, Void> {
     private final static String NAMESPACE = "http://services.aonaware.com/webservices/";
     private final static String SOAP_URL = "http://services.aonaware.com/DictService/DictService.asmx";
 
+    public DictionaryService(AsyncResponse delegate){
+        this.delegate = delegate;
+    }
+
     @Override
-    protected Void doInBackground(Void... params) {
+    protected List<Dictionary> doInBackground(Void... params) {
 
         request = new SoapObject(NAMESPACE, METHOD_NAME);
         dictionaries = new ArrayList<>();
-        //request.addProperty("Celsius", tempValue);
 
         SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER12);
         envelope.dotNet = true;
@@ -60,20 +61,19 @@ public class DictionaryService extends AsyncTask<Void, Void, Void> {
                 Dictionary dict = new Dictionary(id, value);
                 dictionaries.add(dict);
             }
-
-            Context applicationContext = MainActivity.getContextOfApplication();
-            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(applicationContext);
-            String dictionaryList = new Gson().toJson(dictionaries);
-
-            SharedPreferences.Editor editor = pref.edit();
-            editor.putString("dictionaryList", dictionaryList);
-            editor.apply();
-
         } catch (Exception e) {
             e.getMessage();
+            Log.e("DictService", e.getMessage());
         }
 
-        return null;
+        return dictionaries;
+    }
+
+    @Override
+    protected void onPostExecute(List<Dictionary> result) {
+        super.onPostExecute(result);
+
+        delegate.processFinishDict(result);
     }
 
 }
