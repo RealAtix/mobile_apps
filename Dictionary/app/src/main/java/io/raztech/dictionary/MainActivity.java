@@ -173,6 +173,26 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
                 new Gson().fromJson(selectedDictionaryJSONList, new TypeToken<List<Dictionary>>() {}.getType());
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putString("definitionList", new Gson().toJson(definitions));
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+
+        String definitionJSONList = savedInstanceState.getString("definitionList", "[]");
+
+        definitions =
+                new Gson().fromJson(definitionJSONList, new TypeToken<List<Definition>>() {}.getType());
+
+        DefinitionAdapter adapter = new DefinitionAdapter(this, definitions);
+        definitionView.setAdapter(adapter);
+    }
+
     // Share application context with other classes
     public static Context getContextOfApplication(){
         return contextOfApplication;
