@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                                 }
 
                                 name = userInput.getText().toString();
-                                Log.d("name", userInput.getText().toString());
+                                //Log.d("name", userInput.getText().toString());
                                 startTest1Activity();
                             }
                         })
