@@ -14,7 +14,14 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Test 1"
-        android:id="@+id/btnTest1"
-        android:onClick="onTest1Clicked"/>
+        android:text="Test A"
+        android:id="@+id/btnTestA"
+        android:onClick="onTestAClicked"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Test A"
+        android:id="@+id/btnTestB"
+        android:onClick=""/>
 </LinearLayout>

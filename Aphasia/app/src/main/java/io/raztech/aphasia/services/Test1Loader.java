@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Test1Loader extends AsyncTask<String, Void, Pair<Map<String, JSONObject>, Map<String, List<File>>>> {
+public class Test1Loader extends AsyncTask<String, Void, Pair<Map<Integer, JSONObject>, Map<Integer, List<File>>>> {
 
 
     private final AsyncResponse delegate;
@@ -31,20 +31,22 @@ public class Test1Loader extends AsyncTask<String, Void, Pair<Map<String, JSONOb
     }
 
     @Override
-    protected Pair<Map<String, JSONObject>, Map<String, List<File>>> doInBackground(String[] params) {
+    protected Pair<Map<Integer, JSONObject>, Map<Integer, List<File>>> doInBackground(String[] params) {
         String parentPath = params[0];
         File parentDir = new File(parentPath);
 
-        Map<String, List<File>> data = new HashMap<>();
-        Map<String, JSONObject> jsonData = new HashMap<>();
+        Map<Integer, List<File>> data = new HashMap<>();
+        Map<Integer, JSONObject> jsonData = new HashMap<>();
 
         for (int i = 0; i < parentDir.listFiles().length; i++) {
+            //Log.d("parentdirlength", String.valueOf(parentDir.listFiles().length));
             List<File> images = new ArrayList<>();
 
             File path = new File(parentDir.getAbsolutePath() + "/" + i);
             File[] files = path.listFiles();
 
             for (int j = 0; j < path.list().length; j++) {
+                //Log.d("pathlistlength", String.valueOf(path.list().length));
                 if (files[j].getName().contains(".jpg")) {
                     Log.d("files", files[j].getName());
                     images.add(files[j]);
@@ -65,16 +67,16 @@ public class Test1Loader extends AsyncTask<String, Void, Pair<Map<String, JSONOb
 
                         JSONObject jsonObj = new JSONObject(jsonStr);
 
-                        jsonData.put(String.valueOf(i), jsonObj);
+                        jsonData.put(i, jsonObj);
                         Log.d("data", jsonStr);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
             }
-            data.put(String.valueOf(i), images);
+            data.put(i, images);
         }
-        Pair<Map<String, JSONObject>, Map<String, List<File>>> pair = new Pair<>(jsonData, data);
+        Pair<Map<Integer, JSONObject>, Map<Integer, List<File>>> pair = new Pair<>(jsonData, data);
 
         return pair;
     }
@@ -92,7 +94,7 @@ public class Test1Loader extends AsyncTask<String, Void, Pair<Map<String, JSONOb
     }
 
     @Override
-    protected void onPostExecute(Pair<Map<String, JSONObject>, Map<String, List<File>>> result) {
+    protected void onPostExecute(Pair<Map<Integer, JSONObject>, Map<Integer, List<File>>> result) {
         super.onPostExecute(result);
 
         progDialog.dismiss();

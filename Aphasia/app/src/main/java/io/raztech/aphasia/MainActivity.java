@@ -33,9 +33,11 @@ public class MainActivity extends AppCompatActivity {
                     new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE},
                     REQUEST_STORAGE_PERMISSION);
         }
+
+        getName();
     }
 
-    protected void onTest1Clicked(View v) {
+    protected void getName() {
         LayoutInflater li = LayoutInflater.from(this);
         View promptsView = li.inflate(R.layout.dialog_name, null);
 
@@ -53,12 +55,11 @@ public class MainActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog,int id) {
                                 if (userInput.getText().length() == 0) {
                                     nameInputError();
-                                    return;
+                                    getName();
                                 }
 
                                 name = userInput.getText().toString();
                                 //Log.d("name", userInput.getText().toString());
-                                startTest1Activity();
                             }
                         })
                 .setNegativeButton("Cancel",
@@ -70,6 +71,10 @@ public class MainActivity extends AppCompatActivity {
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+    }
+
+    protected void onTestAClicked(View v) {
+        startTest1Activity();
     }
 
     protected void nameInputError() {

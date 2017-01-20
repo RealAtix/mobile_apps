@@ -10,5 +10,5 @@ import java.util.Map;
 
 
 public interface AsyncResponse {
-    void processFinishTest1(Pair<Map<String, JSONObject>, Map<String, List<File>>> output);
+    void processFinishTest1(Pair<Map<Integer, JSONObject>, Map<Integer, List<File>>> output);
 }
