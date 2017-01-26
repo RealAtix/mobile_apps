@@ -16,28 +16,34 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="2"
+        android:layout_gravity="center"
         android:id="@+id/img"/>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:onClick="onStartClicked"
             android:src="@mipmap/ic_start_recording"
+            android:scaleType="fitXY"
+            android:layout_marginLeft="50dp"
+            android:layout_alignParentLeft="true"
             android:layout_gravity="left"
             android:id="@+id/btnStart"/>
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:onClick="onStopClicked"
             android:src="@mipmap/ic_stop_recording"
-            android:layout_gravity="right"
+            android:scaleType="fitXY"
+            android:layout_marginRight="50dp"
+            android:layout_alignParentRight="true"
             android:id="@+id/btnStop"/>
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>

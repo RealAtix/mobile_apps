@@ -21,6 +21,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -92,6 +93,7 @@ public class Test_2 extends AppCompatActivity implements AsyncResponse {
 
         if(counter >= images.size()) {
             //testDone();
+            finish();
             Log.d("showNextQuestion", "Done");
             return;
         }
@@ -190,5 +192,41 @@ public class Test_2 extends AppCompatActivity implements AsyncResponse {
         }
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putString("name", name);
+        outState.putInt("counter", counter);
+        outState.putBoolean("btnStartEnabled", btnStart.isEnabled());
+        outState.putBoolean("btnStopEnabled", btnStop.isEnabled());
+
+        ArrayList<String> img = new ArrayList<>();
+        for (File f : images) {
+            img.add(f.getAbsolutePath());
+        }
+        outState.putStringArrayList("images", img);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+
+        name = savedInstanceState.getString("name");
+        counter = savedInstanceState.getInt("counter");
+        btnStart.setEnabled(savedInstanceState.getBoolean("btnStartEnabled"));
+        btnStop.setEnabled(savedInstanceState.getBoolean("btnStopEnabled"));
+
+        ArrayList<String> img = savedInstanceState.getStringArrayList("images");
+        images = new ArrayList<>();
+        for (String s : img) {
+            images.add(new File(s));
+        }
+
+        ImageView jpgView = (ImageView)findViewById(R.id.img);
+        BitmapDrawable d = new BitmapDrawable(getResources(), images.get(counter-1).getAbsolutePath());
+        jpgView.setImageDrawable(d);
+
+    }
 
 }
