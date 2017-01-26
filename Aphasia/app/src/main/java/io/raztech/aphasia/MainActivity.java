@@ -20,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
     private String name;
 
     private static final int REQUEST_STORAGE_PERMISSION = 114;
+    private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,11 +29,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         boolean hasPermission = (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) &&
-                (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
+                (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) &&
+                (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED);
         if (!hasPermission) {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE},
                     REQUEST_STORAGE_PERMISSION);
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.RECORD_AUDIO},
+                    REQUEST_RECORD_AUDIO_PERMISSION);
         }
 
         getName();
@@ -77,6 +83,14 @@ public class MainActivity extends AppCompatActivity {
         startTest1Activity();
     }
 
+    protected void onEndClicked(View v) {
+        // restart
+        Intent i = getBaseContext().getPackageManager()
+                .getLaunchIntentForPackage( getBaseContext().getPackageName() );
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i);
+    }
+
     protected void nameInputError() {
         Toast.makeText(this, "Need input", Toast.LENGTH_SHORT).show();
     }
@@ -96,10 +110,32 @@ public class MainActivity extends AppCompatActivity {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
                 {
                     Log.v("Permission","Permission is granted");
-                } else
-                {
+                } else {
                     Log.v("Permission","Permission is denied");
                     Toast.makeText(this, "This app needs external card READ and WRITE permission to work.", Toast.LENGTH_LONG).show();
+
+                    Thread closeActivity = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                Thread.sleep(3000);
+
+                                finish();
+                                moveTaskToBack(true);
+                            } catch (Exception e) {
+                                e.getLocalizedMessage();
+                            }
+                        }
+                    });
+                }
+            }
+            case REQUEST_RECORD_AUDIO_PERMISSION: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                {
+                    Log.v("Permission","Permission is granted");
+                } else {
+                    Log.v("Permission","Permission is denied");
+                    Toast.makeText(this, "This app needs audio recording permission to work.", Toast.LENGTH_LONG).show();
 
                     Thread closeActivity = new Thread(new Runnable() {
                         @Override

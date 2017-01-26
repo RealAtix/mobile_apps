@@ -85,7 +85,6 @@
                 android:onClick="onImg4Clicked"/>
         </TableRow>
 
-
     </TableLayout>
 
 </LinearLayout>

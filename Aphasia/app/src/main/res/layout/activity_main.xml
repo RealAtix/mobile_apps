@@ -9,19 +9,30 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
+    android:weightSum="3"
     tools:context="io.raztech.aphasia.MainActivity">
 
     <Button
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:text="Test A"
         android:id="@+id/btnTestA"
         android:onClick="onTestAClicked"/>
 
     <Button
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Test A"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="Test B"
         android:id="@+id/btnTestB"
         android:onClick=""/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="End test"
+        android:id="@+id/btnEnd"
+        android:onClick="onEndClicked"/>
 </LinearLayout>
