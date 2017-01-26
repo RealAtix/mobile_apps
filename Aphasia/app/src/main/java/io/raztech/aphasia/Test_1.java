@@ -1,5 +1,6 @@
 package io.raztech.aphasia;
 
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
@@ -197,12 +198,16 @@ public class Test_1 extends AppCompatActivity implements AsyncResponse, TextToSp
         }
 
         tts.shutdown();
-        finish();
+        Intent resultIntent = new Intent(this, MainActivity.class);
+        resultIntent.putExtra("name", name);
+        resultIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(resultIntent);
     }
 
     protected void onPlayClicked(View v) {
         for (Voice tmpVoice : tts.getVoices()) {
             //Log.d("Voice: ", tmpVoice.toString());
+            //this only works on devices with google tts api (not emulator)
             if (getResources().getConfiguration().locale.toString().contains("en") && tmpVoice.getName().equals("en-gb-x-fis#female_1-local")) {
                 tts.setVoice(tmpVoice);
             } //add voice for FR too
@@ -268,12 +273,33 @@ public class Test_1 extends AppCompatActivity implements AsyncResponse, TextToSp
         super.onSaveInstanceState(outState);
 
         // don't forget to save data arraylists
+        outState.putInt("counter", counter-1);
+        outState.putString("jsonAnswerArray", jsonAnswerArray.toString());
+        tts.shutdown();
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
 
+        counter = savedInstanceState.getInt("counter");
+        Log.d("counter", String.valueOf(counter));
+        try {
+            jsonAnswerArray = new JSONArray(savedInstanceState.getString("jsonAnswerArray"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(tts != null) {
+
+            tts.stop();
+            tts.shutdown();
+            Log.d("tts", "TTS Destroyed");
+        }
+        super.onDestroy();
     }
 
 }

@@ -40,7 +40,12 @@ public class MainActivity extends AppCompatActivity {
                     REQUEST_RECORD_AUDIO_PERMISSION);
         }
 
-        getName();
+        Intent intent = getIntent();
+        name = intent.getStringExtra("name");
+        Log.d("oncreate mainacticity", "true");
+        if (name == null) {
+            getName();
+        }
     }
 
     protected void getName() {
