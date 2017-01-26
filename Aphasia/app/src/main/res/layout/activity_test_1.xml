@@ -20,7 +20,6 @@
         <ImageView
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:text="Play again"
             android:onClick="onPlayClicked"
             android:src="@mipmap/ic_play_sound"
             android:layout_gravity="left"/>

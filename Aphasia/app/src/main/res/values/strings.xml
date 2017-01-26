@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Aphasia</string>
+    <string name="menu_test_a">Test A</string>
+    <string name="menu_test_b">Test B</string>
+    <string name="menu_end">End test</string>
+    <string name="main_RW_permission">This app needs external card READ and WRITE permission to work.</string>
+    <string name="main_audio_permission">This app needs audio recording permission to work</string>
+    <string name="loader_loading">Loading test</string>
+    <string name="test_1_missing_data">Test data is missing from external storage</string>
+    <string name="test_1_tts_failed">Sorry! Text To Speech failed...</string>
+    <string name="test_2_start_recording">Started recording...</string>
+    <string name="test_2_stop_recording">Stopped recording...</string>
+    <string name="test_2_checking_audio">Checking recorded audio for 10 seconds</string>
+    <string name="dialog_name">Please enter your full name</string>
 </resources>

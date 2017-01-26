@@ -64,7 +64,7 @@ public class Test_2 extends AppCompatActivity implements AsyncResponse {
         Log.d("Path", rootDataDir.toString());
 
         if(!rootDataDir.exists()) {
-            Toast.makeText(this, "Test data is missing from external storage", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getResources().getString(R.string.test_1_missing_data), Toast.LENGTH_LONG).show();
             return;
         } else {
             File[] dirFiles = rootDataDir.listFiles();
@@ -156,7 +156,7 @@ public class Test_2 extends AppCompatActivity implements AsyncResponse {
         }
 
         mRecorder.start();
-        Toast.makeText(this, "Started recording...", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getResources().getString(R.string.test_2_start_recording), Toast.LENGTH_SHORT).show();
 
         btnStop.setEnabled(true);
     }
@@ -166,7 +166,7 @@ public class Test_2 extends AppCompatActivity implements AsyncResponse {
 
         mRecorder.stop();
         mRecorder.release();
-        Toast.makeText(this, "Stopped recording...", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getResources().getString(R.string.test_2_stop_recording), Toast.LENGTH_SHORT).show();
 
         check();
 
@@ -178,7 +178,7 @@ public class Test_2 extends AppCompatActivity implements AsyncResponse {
         try {
             mPlayer.setDataSource(this.getExternalFilesDir(null).getAbsolutePath() + "/results/" + name.replaceAll("\\s+","_") + "/" + (counter-1) + "_recording.3gp");
             mPlayer.prepare();
-            Toast.makeText(this, "Checking recorded audio for 10 seconds", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.test_2_checking_audio), Toast.LENGTH_SHORT).show();
             mPlayer.start();
 
             Thread.sleep(10000);

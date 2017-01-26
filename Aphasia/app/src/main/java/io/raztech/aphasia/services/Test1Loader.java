@@ -18,6 +18,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.raztech.aphasia.R;
+
 public class Test1Loader extends AsyncTask<String, Void, Pair<Map<Integer, JSONObject>, Map<Integer, List<File>>>> {
 
 
@@ -86,7 +88,7 @@ public class Test1Loader extends AsyncTask<String, Void, Pair<Map<Integer, JSONO
         super.onPreExecute();
 
         progDialog = new ProgressDialog(context);
-        progDialog.setMessage("Loading test");
+        progDialog.setMessage(context.getResources().getString(R.string.loader_loading));
         progDialog.setIndeterminate(false);
         progDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progDialog.setCancelable(false);

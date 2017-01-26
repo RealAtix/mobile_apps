@@ -70,7 +70,7 @@ public class Test_1 extends AppCompatActivity implements AsyncResponse, TextToSp
 
         File testDir = new File(rootDataDir.getAbsolutePath() + "/0");
         if(!testDir.exists()) {
-            Toast.makeText(this, "Test data is missing from external storage", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getResources().getString(R.string.test_1_missing_data), Toast.LENGTH_LONG).show();
             return;
         } else {
             File[] dirFiles = testDir.listFiles();
@@ -89,11 +89,16 @@ public class Test_1 extends AppCompatActivity implements AsyncResponse, TextToSp
     public void onInit(int status) {
         //check for successful instantiation
         if (status == TextToSpeech.SUCCESS) {
-            if(tts.isLanguageAvailable(Locale.US)==TextToSpeech.LANG_AVAILABLE)
-                tts.setLanguage(Locale.US);
+            if (getResources().getConfiguration().locale.toString().contains("fr")) {
+                if(tts.isLanguageAvailable(Locale.FRENCH)==TextToSpeech.LANG_AVAILABLE)
+                    tts.setLanguage(Locale.FRENCH);
+            } else {
+                if(tts.isLanguageAvailable(Locale.UK)==TextToSpeech.LANG_AVAILABLE)
+                    tts.setLanguage(Locale.UK);
+            }
         }
         else if (status == TextToSpeech.ERROR) {
-            Toast.makeText(this, "Sorry! Text To Speech failed...", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getResources().getString(R.string.test_1_tts_failed), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -136,7 +141,11 @@ public class Test_1 extends AppCompatActivity implements AsyncResponse, TextToSp
 
         try {
             Log.d("wordNextQuestion", info.get(counter).getString("word"));
-            wordText.setText(info.get(counter).getString("word"));
+            if (getResources().getConfiguration().locale.toString().contains("fr")) {
+                wordText.setText(info.get(counter).getString("word-fr"));
+            } else {
+                wordText.setText(info.get(counter).getString("word"));
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -194,9 +203,9 @@ public class Test_1 extends AppCompatActivity implements AsyncResponse, TextToSp
     protected void onPlayClicked(View v) {
         for (Voice tmpVoice : tts.getVoices()) {
             //Log.d("Voice: ", tmpVoice.toString());
-            if (tmpVoice.getName().equals("en-gb-x-fis#female_1-local")) {
+            if (getResources().getConfiguration().locale.toString().contains("en") && tmpVoice.getName().equals("en-gb-x-fis#female_1-local")) {
                 tts.setVoice(tmpVoice);
-            }
+            } //add voice for FR too
         }
         tts.speak(wordText.getText().toString(), TextToSpeech.QUEUE_FLUSH, null, null);
         //tts.speak(wordText.getText().toString(), TextToSpeech.QUEUE_FLUSH, null);
@@ -252,6 +261,19 @@ public class Test_1 extends AppCompatActivity implements AsyncResponse, TextToSp
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        // don't forget to save data arraylists
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+
     }
 
 }

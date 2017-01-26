@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Aphasia</string>
+    <string name="menu_test_a">Test A</string>
+    <string name="menu_test_b">Test B</string>
+    <string name="menu_end">Quitter</string>
+    <string name="main_RW_permission">Cette application a besoin de permission LIRE et ECRIRE pour travailler</string>
+    <string name="main_audio_permission">Cette application a besoin de permission d\'enregistrer audio pour travailler</string>
+    <string name="loader_loading">Charger test</string>
+    <string name="test_1_missing_data">Les données d\'essai sont manquantes dans le stockage externe</string>
+    <string name="test_1_tts_failed">Pardon! Échec du texte vers la parole ...</string>
+    <string name="test_2_start_recording">Commencé à enregistrer ...</string>
+    <string name="test_2_stop_recording">Arrêté d\'enregistrement ...</string>
+    <string name="test_2_checking_audio">Vérification de l\'audio enregistré pendant 10 secondes</string>
+    <string name="dialog_name">S’il vous plaît entrez votre nom complet</string>
+</resources>

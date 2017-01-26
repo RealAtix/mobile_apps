@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="Test A"
+        android:text="@string/menu_test_a"
         android:id="@+id/btnTestA"
         android:onClick="onTestAClicked"/>
 
@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="Test B"
+        android:text="@string/menu_test_b"
         android:id="@+id/btnTestB"
         android:onClick="onTestBClicked"/>
 
@@ -32,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="End test"
+        android:text="@string/menu_end"
         android:id="@+id/btnEnd"
         android:onClick="onEndClicked"/>
 </LinearLayout>

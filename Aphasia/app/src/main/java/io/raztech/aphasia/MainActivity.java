@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.v("Permission","Permission is granted");
                 } else {
                     Log.v("Permission","Permission is denied");
-                    Toast.makeText(this, "This app needs external card READ and WRITE permission to work.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, getResources().getString(R.string.main_RW_permission), Toast.LENGTH_LONG).show();
 
                     Thread closeActivity = new Thread(new Runnable() {
                         @Override
@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.v("Permission","Permission is granted");
                 } else {
                     Log.v("Permission","Permission is denied");
-                    Toast.makeText(this, "This app needs audio recording permission to work.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, getResources().getString(R.string.main_audio_permission), Toast.LENGTH_LONG).show();
 
                     Thread closeActivity = new Thread(new Runnable() {
                         @Override
