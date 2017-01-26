@@ -71,7 +71,7 @@ public class Test_1 extends AppCompatActivity implements AsyncResponse, TextToSp
         File testDir = new File(rootDataDir.getAbsolutePath() + "/0");
         if(!testDir.exists()) {
             Toast.makeText(this, "Test data is missing from external storage", Toast.LENGTH_LONG).show();
-            //return;
+            return;
         } else {
             File[] dirFiles = testDir.listFiles();
             Log.d("files", dirFiles.toString());
@@ -121,6 +121,9 @@ public class Test_1 extends AppCompatActivity implements AsyncResponse, TextToSp
 
         showNextQuestion();
     }
+
+    @Override
+    public void processFinishTest2(List<File> output) {}
 
     private void showNextQuestion() {
 

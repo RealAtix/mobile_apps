@@ -82,6 +82,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onTestAClicked(View v) {
         startTest1Activity();
     }
+    protected void onTestBClicked(View v) {
+        startTest2Activity();
+    }
 
     protected void onEndClicked(View v) {
         // restart
@@ -97,6 +100,12 @@ public class MainActivity extends AppCompatActivity {
 
     protected void startTest1Activity() {
         Intent i = new Intent(this, Test_1.class);
+        i.putExtra("name", name);
+        startActivity(i);
+    }
+
+    protected void startTest2Activity() {
+        Intent i = new Intent(this, Test_2.class);
         i.putExtra("name", name);
         startActivity(i);
     }
