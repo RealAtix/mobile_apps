@@ -92,7 +92,7 @@ public class Test_2 extends AppCompatActivity implements AsyncResponse {
         btnStart.setEnabled(true);
 
         if(counter >= images.size()) {
-            //testDone();
+            testDone();
             finish();
             Log.d("showNextQuestion", "Done");
             return;
@@ -107,32 +107,23 @@ public class Test_2 extends AppCompatActivity implements AsyncResponse {
 
     private void testDone() {
 
-        File resultDir = new File(this.getExternalFilesDir(null).getAbsolutePath() + "/results/" + name.replaceAll("\\s+","_"));
         File resultFile = new File(this.getExternalFilesDir(null).getAbsolutePath() + "/results/" + name.replaceAll("\\s+","_") +
-                "/" + name.replaceAll("\\s+","_") + "_test1.json");
+                "/" + name.replaceAll("\\s+","_") + "_test2.json");
         JSONObject jsonObject = new JSONObject();
 
-        boolean success = true;
-        if (!resultDir.exists()) {
-            success = resultDir.mkdirs();
-        }
-        if (success) {
-            try {
-                jsonObject.put("name", name);
-                jsonObject.put("test", "1");
-                jsonObject.put("answers", jsonAnswerArray);
-                Log.d("jsonobj", jsonObject.toString());
+        try {
+            jsonObject.put("name", name);
+            jsonObject.put("test", "2");
+            jsonObject.put("locale", getResources().getConfiguration().locale.toString());
+            Log.d("jsonobj", jsonObject.toString());
 
-                FileWriter file = new FileWriter(resultFile);
-                file.write(jsonObject.toString(4));
-                file.flush();
-                file.close();
-            } catch (JSONException | IOException e) {
-                e.printStackTrace();
-            }
-
+            FileWriter file = new FileWriter(resultFile);
+            file.write(jsonObject.toString(4));
+            file.flush();
+            file.close();
+        } catch (JSONException | IOException e) {
+            e.printStackTrace();
         }
-        finish();
     }
 
     protected void onStartClicked(View v) {
