@@ -188,7 +188,7 @@ public class Test_2 extends AppCompatActivity implements AsyncResponse {
         super.onSaveInstanceState(outState);
 
         outState.putString("name", name);
-        outState.putInt("counter", counter);
+        outState.putInt("counter", counter-1);
         outState.putBoolean("btnStartEnabled", btnStart.isEnabled());
         outState.putBoolean("btnStopEnabled", btnStop.isEnabled());
 
