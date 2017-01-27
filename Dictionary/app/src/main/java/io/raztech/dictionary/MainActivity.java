@@ -53,7 +53,19 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         setContentView(R.layout.activity_lookup);
 
         editView = (EditText) findViewById(R.id.editView);
+        editView.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                onTextViewClicked(v);
+            }
+        });
         lookupButton = (Button) findViewById(R.id.lookUpButton);
+        lookupButton.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                onLookupClicked(v);
+            }
+        });
         definitionView = (ListView) findViewById(R.id.definitionView);
 
         definitions = new ArrayList<>();
